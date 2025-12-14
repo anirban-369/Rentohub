@@ -22,8 +22,12 @@ cat .env
 
 # Run Prisma migrations
 echo ""
+echo "📦 Installing dependencies..."
+npm install
+
+echo ""
 echo "🔄 Running database migrations..."
-DATABASE_URL="postgresql://rentohub_user:RentoHub@App#2025!@database-3.chokoc6iwcww.eu-north-1.rds.amazonaws.com:5432/rentohub?sslmode=require" npx prisma migrate deploy
+npx prisma migrate deploy
 
 # Build the application
 echo ""
