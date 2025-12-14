@@ -10,7 +10,7 @@ cd ~/rentohub
 echo "📝 Creating .env file..."
 cat > .env << 'ENVEOF'
 NODE_ENV=production
-DATABASE_URL=postgresql://rentohub_user:RentoHub@App#2025!@database-3.chokoc6iwcww.eu-north-1.rds.amazonaws.com:5432/rentohub?sslmode=require
+DATABASE_URL=postgresql://rentohub_user:RentoHub%40App%232025%21@database-3.chokoc6iwcww.eu-north-1.rds.amazonaws.com:5432/rentohub?sslmode=require
 NEXTAUTH_SECRET=RentoHubSecureKey2025ChangeMeLater
 NEXTAUTH_URL=https://rentohub.anir.co.in
 NEXT_PUBLIC_APP_URL=https://rentohub.anir.co.in
