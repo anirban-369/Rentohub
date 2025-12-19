@@ -33,14 +33,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
+
     // Verify password
     const isValid = await verifyPassword(validated.password, user.password)
-
     if (!isValid) {
       console.log('❌ Password invalid')
       return NextResponse.json(
         { success: false, error: 'Invalid email or password' },
         { status: 401 }
+      )
+    }
+
+    // Block suspended/banned users
+    if (user.isBanned) {
+      console.log('❌ User is banned:', validated.email)
+      return NextResponse.json(
+        { success: false, error: 'Your account has been banned. Contact support.' },
+        { status: 403 }
+      )
+    }
+    if (user.isSuspended) {
+      console.log('❌ User is suspended:', validated.email)
+      return NextResponse.json(
+        { success: false, error: 'Your account has been suspended. Contact support.' },
+        { status: 403 }
       )
     }
 

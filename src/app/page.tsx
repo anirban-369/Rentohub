@@ -1,15 +1,31 @@
+
+"use client"
+import React from 'react'
+
 import Link from 'next/link'
 import { searchListingsAction } from './actions/listings'
 import ListingCard from '@/components/ListingCard'
 import Navbar from '@/components/Navbar'
+import dynamic from 'next/dynamic'
+import { useState } from 'react'
 
-export default async function HomePage() {
-  const result = await searchListingsAction({})
-  const listings = result.success ? result.listings : []
+const SupportModal = dynamic(() => import('@/components/SupportModal'), { ssr: false })
+
+export default function HomePage() {
+  const [supportOpen, setSupportOpen] = useState(false)
+  const [listings, setListings] = useState<any[]>([])
+
+  // Fetch listings client-side for modal support
+  React.useEffect(() => {
+    searchListingsAction({}).then(result => {
+      setListings(result.success ? result.listings : [])
+    })
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <Navbar />
+      <SupportModal isOpen={supportOpen} onClose={() => setSupportOpen(false)} />
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="text-center mb-16">
@@ -192,9 +208,13 @@ export default async function HomePage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white transition">
+                  <button
+                    type="button"
+                    className="text-gray-400 hover:text-white transition w-full text-left"
+                    onClick={() => setSupportOpen(true)}
+                  >
                     Help & Support
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>

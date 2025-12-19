@@ -192,11 +192,10 @@ export async function cancelBookingAction(bookingId: string, reason: string) {
       data: {
         status: 'CANCELLED',
         cancelledAt: new Date(),
+        depositRefunded: false,
+        refundAmount: 0,
       },
     })
-
-    // Refund payment if needed
-    // TODO: Implement refund logic
 
     // Notify other party
     const notifyUserId =

@@ -1,12 +1,16 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
+const SupportModal = dynamic(() => import('@/components/SupportModal'), { ssr: false })
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const router = useRouter()
   const [error, setError] = useState('')
+  const [supportOpen, setSupportOpen] = useState(false)
+  const [supportReason, setSupportReason] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -47,6 +51,10 @@ export default function LoginPage() {
       } else {
         setError(result.error || 'Login failed')
         setLoading(false)
+        if (result.error && (result.error.includes('suspend') || result.error.includes('banned'))) {
+          setSupportReason(result.error)
+          setSupportOpen(true)
+        }
       }
     } catch (err: any) {
       console.error('Login error:', err)
@@ -84,6 +92,7 @@ export default function LoginPage() {
             {error}
           </div>
         )}
+        <SupportModal isOpen={supportOpen} onClose={() => setSupportOpen(false)} reason={supportReason} />
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

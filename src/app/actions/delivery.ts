@@ -64,9 +64,13 @@ export async function updateDeliveryStatusAction(
         // Update booking status
         await prisma.booking.update({
           where: { id: deliveryJob.bookingId },
-          data: { status: 'COMPLETED', completedAt: new Date() },
+          data: {
+            status: 'COMPLETED',
+            completedAt: new Date(),
+            depositRefunded: true,
+            refundAmount: deliveryJob.booking.depositAmount || 0,
+          },
         })
-        // TODO: Capture payment and refund deposit
         break
     }
 

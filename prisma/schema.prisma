@@ -1,3 +1,10 @@
+model SupportRequest {
+  id          String   @id @default(uuid())
+  email       String
+  message     String
+  reason      String?
+  createdAt   DateTime @default(now())
+}
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -76,6 +83,11 @@ model User {
   role              UserRole            @default(USER)
   isEmailVerified   Boolean             @default(false)
   profileImage      String?
+  // Admin moderation
+  isSuspended       Boolean             @default(false)
+  isBanned          Boolean             @default(false)
+  suspensionReason  String?
+  bannedReason      String?
   
   // Delivery address for receiving rentals
   deliveryAddress   String?
@@ -110,6 +122,8 @@ model User {
 
   @@index([email])
   @@index([role])
+  @@index([isSuspended])
+  @@index([isBanned])
 }
 
 model KYC {

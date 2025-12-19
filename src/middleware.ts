@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Protected routes that require authentication
-  const protectedPaths = ['/dashboard', '/bookings', '/delivery']
+  const protectedPaths = ['/dashboard', '/bookings', '/delivery', '/admin']
   const adminPaths = ['/admin']
 
   // Check if path is protected
@@ -45,6 +45,13 @@ export async function middleware(request: NextRequest) {
       console.log(`❌ Non-admin accessing admin path: ${pathname}`)
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'
+      return NextResponse.redirect(url)
+    }
+
+    // If admin tries to access user dashboard routes, send to admin
+    if (!isAdminPath && user.role === 'ADMIN' && isProtectedPath) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/admin'
       return NextResponse.redirect(url)
     }
   }

@@ -24,15 +24,6 @@ const adminMenuItems = [
     badge: 'pendingKYC',
   },
   {
-    title: 'Listing Approval',
-    href: '/admin/listings-approval',
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-      </svg>
-    ),
-  },
-  {
     title: 'Users',
     href: '/admin/users',
     icon: (
@@ -114,17 +105,9 @@ export default function AdminNav() {
           })}
         </nav>
 
-        {/* Back to Main Site */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <Link
-            href="/dashboard"
-            className="flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            <span className="font-medium">Back to Dashboard</span>
-          </Link>
+        {/* Sidebar footer placeholder */}
+        <div className="mt-8 pt-6 border-t border-gray-200 text-xs text-gray-500">
+          RentoHub Admin
         </div>
       </div>
     </aside>
